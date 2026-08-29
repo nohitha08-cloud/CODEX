@@ -300,5 +300,42 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
 
     }
+   
+   /* =========================================
+   CROP PAGE BUTTONS
+========================================= */
+
+const updateCropBtn =
+    document.getElementById("updateCropBtn");
+
+if (updateCropBtn) {
+
+    updateCropBtn.addEventListener("click", () => {
+
+        showToast(
+            "Crop Intelligence",
+            "Crop data updated successfully."
+        );
+
+    });
+
+}
+
+
+const saveRecommendationBtn =
+    document.getElementById("saveRecommendationBtn");
+
+if (saveRecommendationBtn) {
+
+    saveRecommendationBtn.addEventListener("click", () => {
+
+        showToast(
+            "Crop AI",
+            "Recommendation saved to farm plan."
+        );
+
+    });
+
+}
 
 });
