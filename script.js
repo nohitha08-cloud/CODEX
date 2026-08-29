@@ -1,123 +1,113 @@
-/* ==================================
-   FARM DNA JAVASCRIPT
-================================== */
-
+/* =========================================
+   FARM DNA - MAIN JAVASCRIPT
+   Page Navigation + Interactions
+========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const navItems =
-        document.querySelectorAll(".nav-item");
+    /* =========================================
+       PAGE ROUTES
+    ========================================= */
 
-    const quickCards =
-        document.querySelectorAll(".quick-card");
+    const pages = {
+        dashboard: "home.html",
+        dna: "dnapage.html",
+        crops: "crops.html",
+        water: "water.html",
+        weather: "weather.html",
+        pest: "pest.html",
+        ai: "ai.html"
+    };
 
-    const toast =
-        document.getElementById("toast");
 
-
-    /* =========================
+    /* =========================================
        SIDEBAR NAVIGATION
-    ========================= */
+    ========================================= */
+
+    const navItems = document.querySelectorAll(".nav-item");
 
     navItems.forEach(item => {
 
         item.addEventListener("click", () => {
 
-            navItems.forEach(nav => {
-                nav.classList.remove("active");
-            });
+            const section = item.dataset.section;
 
-            item.classList.add("active");
-
-            const section =
-                item.dataset.section;
-
-            showToast(
-                "FarmDNA",
-                sectionMessage(section)
-            );
+            if (pages[section]) {
+                window.location.href = pages[section];
+            }
 
         });
 
     });
 
 
-    /* =========================
-       QUICK ACTIONS
-    ========================= */
+    /* =========================================
+       QUICK ACTION CARDS
+    ========================================= */
+
+    const quickCards = document.querySelectorAll(".quick-card");
 
     quickCards.forEach(card => {
 
         card.addEventListener("click", () => {
 
-            const action =
-                card.dataset.action;
+            const action = card.dataset.action;
 
-            showToast(
-                "FarmDNA",
-                actionMessage(action)
-            );
+            if (pages[action]) {
+                window.location.href = pages[action];
+            }
 
         });
 
     });
 
 
-    /* =========================
-       DNA BUTTON
-    ========================= */
+    /* =========================================
+       FARM DNA BUTTON
+    ========================================= */
 
-    const dnaBtn =
-        document.getElementById("dnaBtn");
+    const dnaBtn = document.getElementById("dnaBtn");
 
     if (dnaBtn) {
 
         dnaBtn.addEventListener("click", () => {
 
-            showToast(
-                "Farm DNA",
-                "Your Farm DNA Passport is opening..."
-            );
+            window.location.href = "dnapage.html";
 
         });
 
     }
 
 
-    /* =========================
-       DETAILS BUTTON
-    ========================= */
+    /* =========================================
+       DNA DETAILS BUTTON
+    ========================================= */
 
-    const detailsBtn =
-        document.getElementById("detailsBtn");
+    const detailsBtn = document.getElementById("detailsBtn");
 
     if (detailsBtn) {
 
         detailsBtn.addEventListener("click", () => {
 
-            showToast(
-                "DNA Passport",
-                "Farm DNA details loaded successfully."
-            );
+            window.location.href = "dnapage.html";
 
         });
 
     }
 
 
-    /* =========================
-       AI ACTION
-    ========================= */
+    /* =========================================
+       AI ACTION BUTTON
+    ========================================= */
 
-    const actionBtn =
-        document.getElementById("actionBtn");
+    const actionBtn = document.getElementById("actionBtn");
 
     if (actionBtn) {
 
         actionBtn.addEventListener("click", () => {
 
             showToast(
-                "AI Recommendation",
+                "FarmDNA AI",
                 "Irrigation reminder scheduled for tomorrow morning."
             );
 
@@ -126,69 +116,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =========================
-       NOTIFICATION
-    ========================= */
+    /* =========================================
+       NOTIFICATION BUTTON
+    ========================================= */
 
     const notificationBtn =
-        document.getElementById(
-            "notificationBtn"
-        );
+        document.getElementById("notificationBtn");
 
     if (notificationBtn) {
 
-        notificationBtn.addEventListener(
-            "click",
-            () => {
+        notificationBtn.addEventListener("click", () => {
 
-                showToast(
-                    "Farm Alert",
-                    "Soil moisture is 14% below your normal pattern."
-                );
+            showToast(
+                "Farm Alert",
+                "Soil moisture is 14% below your normal pattern."
+            );
 
-            }
-        );
+        });
 
     }
 
 
-    /* =========================
-       MOBILE NAV
-    ========================= */
+    /* =========================================
+       MOBILE NAVIGATION
+    ========================================= */
 
     const mobileButtons =
-        document.querySelectorAll(
-            ".mobile-nav button"
-        );
+        document.querySelectorAll(".mobile-nav button");
 
     mobileButtons.forEach(button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+        button.addEventListener("click", () => {
 
-                mobileButtons.forEach(btn => {
-                    btn.classList.remove("active");
-                });
+            const section = button.dataset.section;
 
-                button.classList.add("active");
+            if (pages[section]) {
 
-                showToast(
-                    "FarmDNA",
-                    "Navigation updated."
-                );
+                window.location.href =
+                    pages[section];
 
             }
-        );
+
+        });
 
     });
 
 
-    /* =========================
-       TOAST FUNCTION
-    ========================= */
+    /* =========================================
+       TOAST SYSTEM
+    ========================================= */
 
     function showToast(title, message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        if (!toast) return;
 
         const titleElement =
             toast.querySelector("strong");
@@ -196,9 +179,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const messageElement =
             toast.querySelector("span");
 
-        titleElement.textContent = title;
+        if (titleElement) {
+            titleElement.textContent = title;
+        }
 
-        messageElement.textContent = message;
+        if (messageElement) {
+            messageElement.textContent = message;
+        }
 
         toast.classList.add("show");
 
@@ -211,74 +198,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =========================
-       NAV MESSAGES
-    ========================= */
+    /* =========================================
+       ACTIVE PAGE HIGHLIGHT
+    ========================================= */
 
-    function sectionMessage(section) {
+    const currentPage =
+        window.location.pathname
+        .split("/")
+        .pop()
+        .toLowerCase();
 
-        const messages = {
+    navItems.forEach(item => {
 
-            dashboard:
-                "Dashboard overview loaded.",
+        const section =
+            item.dataset.section;
 
-            dna:
-                "Farm DNA Passport loaded.",
+        if (
+            pages[section] &&
+            pages[section].toLowerCase() === currentPage
+        ) {
 
-            crops:
-                "Crop intelligence loaded.",
+            item.classList.add("active");
 
-            water:
-                "Water efficiency data loaded.",
+        }
 
-            weather:
-                "Weather intelligence loaded.",
-
-            pest:
-                "Pest intelligence loaded.",
-
-            ai:
-                "FarmDNA AI is ready."
-
-        };
-
-        return messages[section] ||
-               "Section loaded.";
-
-    }
+    });
 
 
-    /* =========================
-       ACTION MESSAGES
-    ========================= */
+    /* =========================================
+       KEYBOARD SHORTCUTS
+    ========================================= */
 
-    function actionMessage(action) {
+    document.addEventListener("keydown", event => {
 
-        const messages = {
+        /* D = Dashboard */
+        if (event.key.toLowerCase() === "d") {
+            window.location.href = "home.html";
+        }
 
-            crops:
-                "Crop health: 91% — Rice is flowering.",
+        /* F = Farm DNA */
+        if (event.key.toLowerCase() === "f") {
+            window.location.href = "dnapage.html";
+        }
 
-            water:
-                "Water efficiency is currently 78%.",
+        /* C = Crops */
+        if (event.key.toLowerCase() === "c") {
+            window.location.href = "crops.html";
+        }
 
-            weather:
-                "Today's farming conditions are good.",
+        /* W = Water */
+        if (event.key.toLowerCase() === "w") {
+            window.location.href = "water.html";
+        }
 
-            pest:
-                "Current pest risk is LOW.",
+        /* T = Weather */
+        if (event.key.toLowerCase() === "t") {
+            window.location.href = "weather.html";
+        }
 
-            soil:
-                "Soil health score: 82/100.",
+        /* P = Pest */
+        if (event.key.toLowerCase() === "p") {
+            window.location.href = "pest.html";
+        }
 
-            ai:
-                "AI found a new farming insight."
-
-        };
-
-        return messages[action] ||
-               "Action completed.";
-
-    }
+    });
 
 });
