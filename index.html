@@ -1,1940 +1,630 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FarmDNA | Smart Farming</title>
+    <title>FarmDNA | Smart Farming</title>
 
-<style>
-/* =========================
-   FARM DNA DESIGN SYSTEM
-========================= */
-
-:root {
-    --forest: #12372A;
-    --green: #2E7D32;
-    --lime: #A8D65E;
-
-    --bg: #F5F7F1;
-    --white: #FFFFFF;
-
-    --text: #17231D;
-    --muted: #6B776F;
-
-    --blue: #3A86B8;
-    --yellow: #E7A93B;
-    --red: #D95C4F;
-
-    --border: #E3E9E1;
-
-    --shadow: 0 12px 35px rgba(18,55,42,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-}
-
-button {
-    font-family: inherit;
-    cursor: pointer;
-}
-
-/* =========================
-   LAYOUT
-========================= */
-
-.app {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar {
-    width: 245px;
-    background: var(--forest);
-    color: white;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    padding: 25px 18px;
-    z-index: 100;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 10px 35px;
-}
-
-.logo-box {
-    width: 42px;
-    height: 42px;
-    border-radius: 13px;
-    background: var(--lime);
-    color: var(--forest);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 21px;
-    font-weight: bold;
-}
-
-.logo-text {
-    font-size: 21px;
-    font-weight: 800;
-}
-
-.logo-text span {
-    color: var(--lime);
-}
-
-.nav {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-.nav button {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 13px;
-    background: transparent;
-    color: #B5C4BA;
-    text-align: left;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    transition: 0.2s;
-}
-
-.nav button:hover {
-    background: rgba(255,255,255,0.08);
-    color: white;
-}
-
-.nav button.active {
-    background: rgba(168,214,94,0.15);
-    color: white;
-}
-
-.nav-icon {
-    width: 24px;
-    font-size: 18px;
-    text-align: center;
-}
-
-.farm-mini {
-    position: absolute;
-    left: 18px;
-    right: 18px;
-    bottom: 25px;
-    padding: 16px;
-    border-radius: 15px;
-    background: rgba(255,255,255,0.08);
-}
-
-.farm-mini small {
-    color: #91A399;
-    font-size: 10px;
-}
-
-.farm-mini strong {
-    display: block;
-    margin-top: 6px;
-    font-size: 12px;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-.main {
-    margin-left: 245px;
-    width: calc(100% - 245px);
-    padding: 30px;
-    max-width: 1600px;
-}
-
-/* =========================
-   TOP BAR
-========================= */
-
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.greeting small {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.greeting h1 {
-    font-size: 28px;
-    margin-top: 6px;
-}
-
-.top-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.notification {
-    width: 43px;
-    height: 43px;
-    border-radius: 13px;
-    border: 1px solid var(--border);
-    background: white;
-    font-size: 18px;
-    position: relative;
-}
-
-.notification-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--red);
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    border-radius: 50%;
-}
-
-.avatar {
-    width: 43px;
-    height: 43px;
-    border-radius: 13px;
-    background: var(--forest);
-    color: var(--lime);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
-
-/* =========================
-   FARM SELECTOR
-========================= */
-
-.farm-selector {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 15px;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    margin-bottom: 22px;
-}
-
-.farm-icon {
-    width: 37px;
-    height: 37px;
-    background: #EEF5E8;
-    border-radius: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.farm-selector small {
-    display: block;
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.farm-selector strong {
-    font-size: 13px;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 0.7fr;
-    gap: 20px;
-}
-
-.hero {
-    min-height: 290px;
-    border-radius: 25px;
-    padding: 32px;
-    background: var(--forest);
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border: 1px solid rgba(168,214,94,0.18);
-    border-radius: 50%;
-    right: -150px;
-    top: -160px;
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    border: 1px solid rgba(168,214,94,0.13);
-    border-radius: 50%;
-    right: -90px;
-    top: -100px;
-}
-
-.hero-label {
-    color: var(--lime);
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-}
-
-.hero h2 {
-    font-size: 29px;
-    max-width: 480px;
-    margin-top: 12px;
-}
-
-.hero p {
-    max-width: 500px;
-    color: #B7C7BD;
-    line-height: 1.7;
-    font-size: 13px;
-    margin-top: 10px;
-}
-
-.hero-button {
-    margin-top: 25px;
-    padding: 13px 19px;
-    border: none;
-    border-radius: 12px;
-    background: var(--lime);
-    color: var(--forest);
-    font-weight: bold;
-}
-
-.dna-orbit {
-    position: absolute;
-    width: 165px;
-    height: 165px;
-    border-radius: 50%;
-    border: 2px solid rgba(168,214,94,0.45);
-    right: 65px;
-    top: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dna-orbit::before {
-    content: "";
-    position: absolute;
-    width: 125px;
-    height: 125px;
-    border-radius: 50%;
-    border: 1px dashed rgba(168,214,94,0.45);
-}
-
-.dna-orbit::after {
-    content: "";
-    position: absolute;
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    border: 1px solid rgba(168,214,94,0.3);
-}
-
-.dna-score {
-    text-align: center;
-    z-index: 2;
-}
-
-.dna-score strong {
-    display: block;
-    font-size: 38px;
-}
-
-.dna-score span {
-    color: var(--lime);
-    font-size: 9px;
-    font-weight: bold;
-}
-
-/* =========================
-   WEATHER
-========================= */
-
-.weather {
-    background: white;
-    border-radius: 25px;
-    padding: 25px;
-    box-shadow: var(--shadow);
-}
-
-.weather-head {
-    display: flex;
-    justify-content: space-between;
-}
-
-.weather-head h3 {
-    font-size: 15px;
-}
-
-.weather-head small {
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.weather-icon {
-    font-size: 38px;
-}
-
-.temperature {
-    font-size: 42px;
-    font-weight: 800;
-    margin-top: 22px;
-}
-
-.weather-good {
-    color: var(--green);
-    font-size: 11px;
-    font-weight: bold;
-    margin-top: 4px;
-}
-
-.weather-data {
-    display: flex;
-    gap: 25px;
-    margin-top: 25px;
-}
-
-.weather-data small {
-    color: var(--muted);
-    display: block;
-    font-size: 9px;
-}
-
-.weather-data strong {
-    font-size: 12px;
-}
-
-/* =========================
-   SECTION
-========================= */
-
-.section {
-    margin-top: 28px;
-}
-
-.section-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-}
-
-.section-title h2 {
-    font-size: 17px;
-}
-
-.section-title button {
-    border: none;
-    background: transparent;
-    color: var(--green);
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* =========================
-   QUICK ACTIONS
-========================= */
-
-.quick-grid {
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-    gap: 12px;
-}
-
-.quick {
-    background: white;
-    border-radius: 17px;
-    padding: 17px 10px;
-    text-align: center;
-    border: 1px solid var(--border);
-    transition: 0.2s;
-}
-
-.quick:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
-}
-
-.quick-icon {
-    width: 42px;
-    height: 42px;
-    margin: auto;
-    border-radius: 12px;
-    background: #EEF5E8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 19px;
-}
-
-.quick span {
-    display: block;
-    margin-top: 9px;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-/* =========================
-   CONTENT
-========================= */
-
-.content-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 20px;
-}
-
-.card {
-    background: white;
-    border-radius: 24px;
-    padding: 25px;
-    box-shadow: var(--shadow);
-}
-
-/* =========================
-   DNA CARD
-========================= */
-
-.dna-content {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-}
-
-.dna-ring {
-    width: 185px;
-    height: 185px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background:
-        conic-gradient(
-            var(--green) 0deg 313deg,
-            #E7ECE5 313deg 360deg
-        );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dna-ring-inner {
-    width: 140px;
-    height: 140px;
-    background: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.dna-ring-inner strong {
-    font-size: 38px;
-}
-
-.dna-ring-inner small {
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.dna-items {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.dna-item {
-    background: var(--bg);
-    padding: 13px;
-    border-radius: 14px;
-}
-
-.dna-item small {
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.dna-item strong {
-    display: block;
-    margin-top: 5px;
-    font-size: 15px;
-}
-
-.good {
-    color: var(--green);
-    font-size: 8px;
-    font-weight: bold;
-}
-
-/* =========================
-   AI
-========================= */
-
-.ai-card {
-    background: linear-gradient(145deg,#FFFFFF,#F0F7EA);
-}
-
-.ai-header {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
-.ai-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--forest);
-    color: var(--lime);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-}
-
-.ai-header h3 {
-    font-size: 16px;
-}
-
-.ai-header p {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-}
-
-.ai-message {
-    background: white;
-    border: 1px solid var(--border);
-    padding: 18px;
-    border-radius: 17px;
-    font-size: 12px;
-    line-height: 1.7;
-    margin-top: 22px;
-}
-
-.ai-message .green-text {
-    color: var(--green);
-    font-weight: bold;
-}
-
-.ai-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 18px;
-}
-
-.ai-impact {
-    font-size: 9px;
-    color: var(--muted);
-}
-
-.ai-impact strong {
-    display: block;
-    color: var(--green);
-    font-size: 12px;
-    margin-top: 3px;
-}
-
-.action {
-    border: none;
-    padding: 11px 15px;
-    border-radius: 11px;
-    background: var(--forest);
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-/* =========================
-   METRICS
-========================= */
-
-.metrics {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 20px;
-}
-
-.metric {
-    background: white;
-    padding: 23px;
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-}
-
-.metric-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.metric-head h3 {
-    font-size: 14px;
-}
-
-.metric-icon {
-    width: 38px;
-    height: 38px;
-    background: #EEF5E8;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.metric-number {
-    font-size: 30px;
-    font-weight: 800;
-    margin-top: 20px;
-}
-
-.metric-number span {
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.metric-sub {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-}
-
-.progress {
-    height: 7px;
-    background: #E8EDE7;
-    border-radius: 10px;
-    margin-top: 17px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    border-radius: 10px;
-    background: var(--green);
-}
-
-.metric-foot {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 12px;
-    font-size: 9px;
-    color: var(--muted);
-}
-
-.up {
-    color: var(--green);
-    font-weight: bold;
-}
-
-/* =========================
-   EVOLUTION
-========================= */
-
-.evolution {
-    margin-top: 20px;
-}
-
-.chart {
-    height: 140px;
-    display: flex;
-    align-items: flex-end;
-    gap: 15px;
-    padding: 15px 5px 0;
-}
-
-.bar {
-    flex: 1;
-    border-radius: 8px 8px 2px 2px;
-    background: #DCE8D8;
-    transition: 0.3s;
-}
-
-.bar:hover {
-    background: var(--green);
-}
-
-.bar:nth-child(1) {height:55%;}
-.bar:nth-child(2) {height:62%;}
-.bar:nth-child(3) {height:71%;}
-.bar:nth-child(4) {height:82%;}
-
-.chart-labels {
-    display: flex;
-    justify-content: space-between;
-    color: var(--muted);
-    font-size: 9px;
-}
-
-/* =========================
-   MOBILE NAV
-========================= */
-
-.mobile-nav {
-    display: none;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1100px) {
-
-    .quick-grid {
-        grid-template-columns: repeat(3,1fr);
-    }
-
-    .hero-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .metrics {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media(max-width:750px) {
-
-    .sidebar {
-        display: none;
-    }
-
-    .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 20px 15px 100px;
-    }
-
-    .topbar {
-        align-items: flex-start;
-    }
-
-    .greeting h1 {
-        font-size: 22px;
-    }
-
-    .avatar {
-        display: none;
-    }
-
-    .hero {
-        min-height: 330px;
-        padding: 24px;
-    }
-
-    .hero h2 {
-        font-size: 24px;
-        max-width: 300px;
-    }
-
-    .dna-orbit {
-        width: 125px;
-        height: 125px;
-        right: 22px;
-        bottom: 25px;
-        top: auto;
-    }
-
-    .dna-orbit::before {
-        width: 95px;
-        height: 95px;
-    }
-
-    .dna-orbit::after {
-        width: 55px;
-        height: 55px;
-    }
-
-    .dna-score strong {
-        font-size: 28px;
-    }
-
-    .quick-grid {
-        grid-template-columns: repeat(3,1fr);
-    }
-
-    .dna-content {
-        flex-direction: column;
-    }
-
-    .dna-items {
-        width: 100%;
-    }
-
-    .metrics {
-        grid-template-columns: 1fr;
-    }
-
-    .mobile-nav {
-        display: flex;
-        position: fixed;
-        bottom: 14px;
-        left: 14px;
-        right: 14px;
-        height: 65px;
-        border-radius: 21px;
-        background: rgba(18,55,42,0.97);
-        z-index: 200;
-        justify-content: space-around;
-        align-items: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-
-    .mobile-nav button {
-        border: none;
-        background: transparent;
-        color: #AABBB0;
-        font-size: 20px;
-    }
-
-    .mobile-nav button.active {
-        color: var(--lime);
-    }
-}
-
-@media(max-width:430px) {
-
-    .quick {
-        padding: 13px 5px;
-    }
-
-    .quick span {
-        font-size: 9px;
-    }
-
-    .dna-ring {
-        width: 155px;
-        height: 155px;
-    }
-
-    .dna-ring-inner {
-        width: 118px;
-        height: 118px;
-    }
-
-    .dna-ring-inner strong {
-        font-size: 30px;
-    }
-
-    .dna-items {
-        gap: 7px;
-    }
-
-    .dna-item {
-        padding: 10px;
-    }
-}
-
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-<div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-<!-- =========================
-     SIDEBAR
-========================= -->
+        <div class="logo">
+            <div class="logo-icon">🧬</div>
 
-<aside class="sidebar">
-
-    <div class="logo">
-
-        <div class="logo-box">
-            🧬
+            <div>
+                <h2>Farm<span>DNA</span></h2>
+                <p>SMART FARMING</p>
+            </div>
         </div>
 
-        <div class="logo-text">
-            Farm<span>DNA</span>
+        <nav>
+
+            <button class="nav-item active" data-section="dashboard">
+                <span>⌂</span>
+                Dashboard
+            </button>
+
+            <button class="nav-item" data-section="dna">
+                <span>🧬</span>
+                Farm DNA
+            </button>
+
+            <button class="nav-item" data-section="crops">
+                <span>🌱</span>
+                Crops
+            </button>
+
+            <button class="nav-item" data-section="water">
+                <span>💧</span>
+                Water
+            </button>
+
+            <button class="nav-item" data-section="weather">
+                <span>☀️</span>
+                Weather
+            </button>
+
+            <button class="nav-item" data-section="pest">
+                <span>🐛</span>
+                Pest Intelligence
+            </button>
+
+            <button class="nav-item" data-section="ai">
+                <span>🤖</span>
+                FarmDNA AI
+            </button>
+
+        </nav>
+
+        <div class="farm-mini">
+
+            <small>ACTIVE FARM</small>
+
+            <strong>🌾 Green Valley Farm</strong>
+
+            <p>Vijayawada · 12 Acres</p>
+
         </div>
 
-    </div>
+    </aside>
 
 
-    <nav class="nav">
+    <!-- MAIN -->
+    <main class="main">
 
-        <button class="active" onclick="home()">
-            <span class="nav-icon">⌂</span>
-            Home
-        </button>
+        <!-- HEADER -->
+        <header class="header">
 
-        <button onclick="dna()">
-            <span class="nav-icon">🧬</span>
-            Farm DNA
-        </button>
+            <div>
+                <p class="date">Saturday · August 29, 2026</p>
 
-        <button onclick="crops()">
-            <span class="nav-icon">🌱</span>
-            Crops
-        </button>
+                <h1>
+                    Good evening, Farmer 👋
+                </h1>
+            </div>
 
-        <button onclick="water()">
-            <span class="nav-icon">💧</span>
-            Water
-        </button>
+            <div class="header-actions">
 
-        <button onclick="weather()">
-            <span class="nav-icon">☀️</span>
-            Weather
-        </button>
+                <button class="notification" id="notificationBtn">
+                    🔔
+                    <span></span>
+                </button>
 
-        <button onclick="pest()">
-            <span class="nav-icon">🐛</span>
-            Pest Intelligence
-        </button>
+                <div class="profile">
+                    A
+                </div>
 
-        <button onclick="ai()">
-            <span class="nav-icon">🤖</span>
-            FarmDNA AI
-        </button>
+            </div>
+
+        </header>
+
+
+        <!-- FARM SELECTOR -->
+        <div class="farm-selector">
+
+            <div class="farm-selector-icon">
+                🌾
+            </div>
+
+            <div>
+                <small>MY FARM</small>
+
+                <strong>
+                    Green Valley Farm · Vijayawada
+                </strong>
+            </div>
+
+            <div class="arrow">
+                ▾
+            </div>
+
+        </div>
+
+
+        <!-- HERO -->
+        <section class="hero-section">
+
+            <div class="hero">
+
+                <div class="hero-content">
+
+                    <p class="eyebrow">
+                        DIGITAL FARM IDENTITY
+                    </p>
+
+                    <h2>
+                        Your Farm Has
+                        <br>
+                        Its Own <span>DNA.</span>
+                    </h2>
+
+                    <p class="hero-description">
+
+                        FarmDNA learns from your soil, crops,
+                        water, weather, pests and yield to help
+                        you make smarter farming decisions.
+
+                    </p>
+
+                    <button class="primary-btn" id="dnaBtn">
+
+                        Explore Farm DNA
+                        <span>→</span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- DNA CIRCLE -->
+
+                <div class="dna-visual">
+
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+
+                    <div class="dna-score">
+
+                        <strong>87</strong>
+
+                        <small>DNA SCORE</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEATHER CARD -->
+
+            <div class="weather-card">
+
+                <div class="weather-top">
+
+                    <div>
+                        <h3>Today's Weather</h3>
+
+                        <p>
+                            Vijayawada, Andhra Pradesh
+                        </p>
+                    </div>
+
+                    <div class="weather-icon">
+                        ☀️
+                    </div>
+
+                </div>
+
+                <div class="temperature">
+                    29°
+                </div>
+
+                <div class="weather-status">
+                    ● Good conditions for farming
+                </div>
+
+                <div class="weather-details">
+
+                    <div>
+                        <small>Humidity</small>
+                        <strong>68%</strong>
+                    </div>
+
+                    <div>
+                        <small>Rain</small>
+                        <strong>20%</strong>
+                    </div>
+
+                    <div>
+                        <small>Wind</small>
+                        <strong>12 km/h</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Quick Actions</h2>
+            </div>
+
+            <div class="quick-actions">
+
+                <button class="quick-card" data-action="crops">
+                    <div>🌱</div>
+                    <span>Crops</span>
+                </button>
+
+                <button class="quick-card" data-action="water">
+                    <div>💧</div>
+                    <span>Water</span>
+                </button>
+
+                <button class="quick-card" data-action="weather">
+                    <div>🌦️</div>
+                    <span>Weather</span>
+                </button>
+
+                <button class="quick-card" data-action="pest">
+                    <div>🐛</div>
+                    <span>Pest</span>
+                </button>
+
+                <button class="quick-card" data-action="soil">
+                    <div>🧪</div>
+                    <span>Soil</span>
+                </button>
+
+                <button class="quick-card" data-action="ai">
+                    <div>✦</div>
+                    <span>AI Insights</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- DNA + AI -->
+
+        <section class="two-column section">
+
+
+            <!-- DNA PASSPORT -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Farm DNA Passport</h2>
+                        <p>Live farm personality profile</p>
+                    </div>
+
+                    <button class="text-btn" id="detailsBtn">
+                        View Details →
+                    </button>
+
+                </div>
+
+
+                <div class="dna-passport">
+
+                    <div class="dna-ring">
+
+                        <div class="dna-ring-inner">
+
+                            <strong>87</strong>
+
+                            <small>HEALTHY</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dna-properties">
+
+                        <div class="property">
+                            <span>🌱 Soil</span>
+                            <strong>82</strong>
+                            <small>GOOD</small>
+                        </div>
+
+                        <div class="property">
+                            <span>💧 Water</span>
+                            <strong>78</strong>
+                            <small>STABLE</small>
+                        </div>
+
+                        <div class="property">
+                            <span>🌾 Crop</span>
+                            <strong>91</strong>
+                            <small>EXCELLENT</small>
+                        </div>
+
+                        <div class="property">
+                            <span>☀️ Weather</span>
+                            <strong>86</strong>
+                            <small>GOOD</small>
+                        </div>
+
+                        <div class="property">
+                            <span>🐛 Pest</span>
+                            <strong>92</strong>
+                            <small>LOW RISK</small>
+                        </div>
+
+                        <div class="property">
+                            <span>📈 Yield</span>
+                            <strong>84</strong>
+                            <small>RISING</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI CARD -->
+
+            <div class="card ai-card">
+
+                <div class="ai-title">
+
+                    <div class="ai-icon">
+                        ✦
+                    </div>
+
+                    <div>
+                        <h2>FarmDNA AI</h2>
+                        <p>Your intelligent farm companion</p>
+                    </div>
+
+                </div>
+
+
+                <div class="ai-message">
+
+                    <strong>AI INSIGHT</strong>
+
+                    <p>
+
+                        Your soil moisture is falling
+                        <b>14% faster</b> than your normal
+                        Farm DNA pattern.
+
+                    </p>
+
+                    <p>
+
+                        Based on today's weather,
+                        <b>irrigation tomorrow morning</b>
+                        would be more efficient than
+                        irrigating tonight.
+
+                    </p>
+
+                </div>
+
+
+                <div class="ai-footer">
+
+                    <div>
+
+                        <small>EXPECTED IMPACT</small>
+
+                        <strong>
+                            Save 8–12% water
+                        </strong>
+
+                    </div>
+
+                    <button class="dark-btn" id="actionBtn">
+                        Take Action
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FARM INTELLIGENCE -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Farm Intelligence</h2>
+
+                <button class="text-btn">
+                    View All →
+                </button>
+
+            </div>
+
+
+            <div class="metrics">
+
+
+                <!-- SOIL -->
+
+                <div class="metric-card">
+
+                    <div class="metric-header">
+
+                        <h3>🌱 Soil Health</h3>
+
+                        <span>🧪</span>
+
+                    </div>
+
+                    <div class="metric-number">
+                        82<span>/100</span>
+                    </div>
+
+                    <p>
+                        Moisture 64% · pH 6.7
+                    </p>
+
+                    <div class="progress">
+                        <div style="width:82%"></div>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>Last season</span>
+                        <b>↑ 7%</b>
+                    </div>
+
+                </div>
+
+
+                <!-- CROP -->
+
+                <div class="metric-card">
+
+                    <div class="metric-header">
+
+                        <h3>🌾 Crop Health</h3>
+
+                        <span>🌱</span>
+
+                    </div>
+
+                    <div class="metric-number">
+                        91<span>%</span>
+                    </div>
+
+                    <p>
+                        Rice · Flowering · Day 72
+                    </p>
+
+                    <div class="progress">
+                        <div style="width:91%"></div>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>Expected yield</span>
+                        <b>4.8 t/acre</b>
+                    </div>
+
+                </div>
+
+
+                <!-- WATER -->
+
+                <div class="metric-card">
+
+                    <div class="metric-header">
+
+                        <h3>💧 Water Efficiency</h3>
+
+                        <span>💧</span>
+
+                    </div>
+
+                    <div class="metric-number">
+                        78<span>%</span>
+                    </div>
+
+                    <p>
+                        1,840 L used today
+                    </p>
+
+                    <div class="progress">
+                        <div style="width:78%"></div>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>Water saved</span>
+                        <b>↑ 12%</b>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EVOLUTION -->
+
+        <section class="card evolution">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Farm DNA Evolution</h2>
+
+                    <p>
+                        Your farm is learning over time
+                    </p>
+                </div>
+
+                <span class="year">
+                    2023 — 2026
+                </span>
+
+            </div>
+
+
+            <div class="chart">
+
+                <div class="bar" style="height:55%">
+                    <span>71</span>
+                </div>
+
+                <div class="bar" style="height:65%">
+                    <span>76</span>
+                </div>
+
+                <div class="bar" style="height:77%">
+                    <span>82</span>
+                </div>
+
+                <div class="bar active-bar" style="height:90%">
+                    <span>87</span>
+                </div>
+
+            </div>
+
+
+            <div class="chart-labels">
+
+                <span>2023</span>
+                <span>2024</span>
+                <span>2025</span>
+                <span>2026</span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MOBILE NAV -->
+
+    <nav class="mobile-nav">
+
+        <button class="active">⌂</button>
+        <button>🧬</button>
+        <button>🌱</button>
+        <button>🤖</button>
+        <button>👤</button>
 
     </nav>
 
 
-    <div class="farm-mini">
+    <!-- TOAST -->
 
-        <small>ACTIVE FARM</small>
-
-        <strong>
-            🌾 Green Valley Farm
-        </strong>
-
-        <small>
-            Vijayawada · 12 Acres
-        </small>
-
-    </div>
-
-</aside>
-
-
-<!-- =========================
-     MAIN CONTENT
-========================= -->
-
-<main class="main">
-
-
-<!-- TOP BAR -->
-
-<div class="topbar">
-
-    <div class="greeting">
-
-        <small>
-            Saturday · August 29
-        </small>
-
-        <h1>
-            Good evening, Farmer 👋
-        </h1>
-
+    <div id="toast" class="toast">
+        <strong>FarmDNA</strong>
+        <span>Action completed successfully.</span>
     </div>
 
 
-    <div class="top-right">
-
-        <button class="notification"
-                onclick="showNotification()">
-
-            🔔
-
-            <span class="notification-dot"></span>
-
-        </button>
-
-        <div class="avatar">
-            A
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- FARM SELECTOR -->
-
-<div class="farm-selector">
-
-    <div class="farm-icon">
-        🌾
-    </div>
-
-    <div>
-
-        <small>
-            MY FARM
-        </small>
-
-        <strong>
-            Green Valley Farm · Vijayawada
-        </strong>
-
-    </div>
-
-    <span>
-        ▾
-    </span>
-
-</div>
-
-
-<!-- HERO -->
-
-<div class="hero-grid">
-
-
-    <section class="hero">
-
-        <div class="hero-label">
-            DIGITAL FARM IDENTITY
-        </div>
-
-        <h2>
-            Your Farm Has Its Own DNA.
-        </h2>
-
-        <p>
-            FarmDNA learns from your soil, crops,
-            water, weather, pests and yield to help
-            you make smarter farming decisions.
-        </p>
-
-        <button class="hero-button"
-                onclick="dna()">
-
-            Explore Farm DNA →
-        </button>
-
-
-        <div class="dna-orbit">
-
-            <div class="dna-score">
-
-                <strong>
-                    87
-                </strong>
-
-                <span>
-                    DNA SCORE
-                </span>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- WEATHER -->
-
-    <section class="weather">
-
-        <div class="weather-head">
-
-            <div>
-
-                <h3>
-                    Today's Weather
-                </h3>
-
-                <small>
-                    Vijayawada, Andhra Pradesh
-                </small>
-
-            </div>
-
-            <div class="weather-icon">
-                ☀️
-            </div>
-
-        </div>
-
-
-        <div class="temperature">
-            29°
-        </div>
-
-        <div class="weather-good">
-            ● Good conditions for farming
-        </div>
-
-
-        <div class="weather-data">
-
-            <div>
-                <small>Humidity</small>
-                <strong>68%</strong>
-            </div>
-
-            <div>
-                <small>Rain</small>
-                <strong>20%</strong>
-            </div>
-
-            <div>
-                <small>Wind</small>
-                <strong>12 km/h</strong>
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<!-- QUICK ACTIONS -->
-
-<section class="section">
-
-    <div class="section-title">
-        <h2>Quick Actions</h2>
-    </div>
-
-
-    <div class="quick-grid">
-
-
-        <div class="quick" onclick="crops()">
-
-            <div class="quick-icon">
-                🌱
-            </div>
-
-            <span>Crops</span>
-
-        </div>
-
-
-        <div class="quick" onclick="water()">
-
-            <div class="quick-icon">
-                💧
-            </div>
-
-            <span>Water</span>
-
-        </div>
-
-
-        <div class="quick" onclick="weather()">
-
-            <div class="quick-icon">
-                🌦️
-            </div>
-
-            <span>Weather</span>
-
-        </div>
-
-
-        <div class="quick" onclick="pest()">
-
-            <div class="quick-icon">
-                🐛
-            </div>
-
-            <span>Pest</span>
-
-        </div>
-
-
-        <div class="quick" onclick="dna()">
-
-            <div class="quick-icon">
-                🧪
-            </div>
-
-            <span>Soil</span>
-
-        </div>
-
-
-        <div class="quick" onclick="ai()">
-
-            <div class="quick-icon">
-                ✦
-            </div>
-
-            <span>AI Insights</span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- DNA + AI -->
-
-<section class="section">
-
-<div class="content-grid">
-
-
-<!-- FARM DNA -->
-
-<div class="card">
-
-    <div class="section-title">
-
-        <h2>
-            Farm DNA Passport
-        </h2>
-
-        <button onclick="dna()">
-            View Details →
-        </button>
-
-    </div>
-
-
-    <div class="dna-content">
-
-
-        <div class="dna-ring">
-
-            <div class="dna-ring-inner">
-
-                <strong>
-                    87
-                </strong>
-
-                <small>
-                    HEALTHY
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <div class="dna-items">
-
-
-            <div class="dna-item">
-
-                <small>🌱 Soil</small>
-
-                <strong>82</strong>
-
-                <span class="good">
-                    ● GOOD
-                </span>
-
-            </div>
-
-
-            <div class="dna-item">
-
-                <small>💧 Water</small>
-
-                <strong>78</strong>
-
-                <span class="good">
-                    ● STABLE
-                </span>
-
-            </div>
-
-
-            <div class="dna-item">
-
-                <small>🌾 Crop</small>
-
-                <strong>91</strong>
-
-                <span class="good">
-                    ● EXCELLENT
-                </span>
-
-            </div>
-
-
-            <div class="dna-item">
-
-                <small>🌦 Weather</small>
-
-                <strong>86</strong>
-
-                <span class="good">
-                    ● GOOD
-                </span>
-
-            </div>
-
-
-            <div class="dna-item">
-
-                <small>🐛 Pest</small>
-
-                <strong>92</strong>
-
-                <span class="good">
-                    ● LOW RISK
-                </span>
-
-            </div>
-
-
-            <div class="dna-item">
-
-                <small>📈 Yield</small>
-
-                <strong>84</strong>
-
-                <span class="good">
-                    ● RISING
-                </span>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- AI -->
-
-<div class="card ai-card">
-
-    <div class="ai-header">
-
-        <div class="ai-icon">
-            ✦
-        </div>
-
-        <div>
-
-            <h3>
-                FarmDNA AI
-            </h3>
-
-            <p>
-                Your intelligent farm companion
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="ai-message">
-
-        <strong class="green-text">
-            AI Insight
-        </strong>
-
-        <br><br>
-
-        Your soil moisture is falling
-        <span class="green-text">
-            14% faster
-        </span>
-        than your normal Farm DNA pattern.
-
-        <br><br>
-
-        Based on today's weather,
-        <span class="green-text">
-            irrigation tomorrow morning
-        </span>
-        would be more efficient than irrigating tonight.
-
-    </div>
-
-
-    <div class="ai-bottom">
-
-        <div class="ai-impact">
-
-            Expected impact
-
-            <strong>
-                Save 8–12% water
-            </strong>
-
-        </div>
-
-
-        <button class="action"
-                onclick="takeAction()">
-
-            Take Action
-
-        </button>
-
-    </div>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- FARM INTELLIGENCE -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <h2>
-        Farm Intelligence
-    </h2>
-
-    <button>
-        View All →
-    </button>
-
-</div>
-
-
-<div class="metrics">
-
-
-<!-- SOIL -->
-
-<div class="metric">
-
-    <div class="metric-head">
-
-        <h3>
-            🌱 Soil Health
-        </h3>
-
-        <div class="metric-icon">
-            🧪
-        </div>
-
-    </div>
-
-
-    <div class="metric-number">
-        82<span>/100</span>
-    </div>
-
-    <div class="metric-sub">
-        Moisture 64% · pH 6.7
-    </div>
-
-
-    <div class="progress">
-
-        <div class="progress-bar"
-             style="width:82%">
-        </div>
-
-    </div>
-
-
-    <div class="metric-foot">
-
-        <span>
-            Last season
-        </span>
-
-        <span class="up">
-            ↑ 7%
-        </span>
-
-    </div>
-
-</div>
-
-
-<!-- CROP -->
-
-<div class="metric">
-
-    <div class="metric-head">
-
-        <h3>
-            🌾 Crop Health
-        </h3>
-
-        <div class="metric-icon">
-            🌱
-        </div>
-
-    </div>
-
-
-    <div class="metric-number">
-        91%
-    </div>
-
-    <div class="metric-sub">
-        Rice · Flowering · Day 72
-    </div>
-
-
-    <div class="progress">
-
-        <div class="progress-bar"
-             style="width:91%">
-        </div>
-
-    </div>
-
-
-    <div class="metric-foot">
-
-        <span>
-            Expected yield
-        </span>
-
-        <span class="up">
-            4.8 t/acre
-        </span>
-
-    </div>
-
-</div>
-
-
-<!-- WATER -->
-
-<div class="metric">
-
-    <div class="metric-head">
-
-        <h3>
-            💧 Water Efficiency
-        </h3>
-
-        <div class="metric-icon">
-            💧
-        </div>
-
-    </div>
-
-
-    <div class="metric-number">
-        78%
-    </div>
-
-    <div class="metric-sub">
-        1,840 L used today
-    </div>
-
-
-    <div class="progress">
-
-        <div class="progress-bar"
-             style="width:78%">
-        </div>
-
-    </div>
-
-
-    <div class="metric-foot">
-
-        <span>
-            Water saved
-        </span>
-
-        <span class="up">
-            ↑ 12%
-        </span>
-
-    </div>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-<!-- EVOLUTION -->
-
-<section class="section evolution">
-
-<div class="card">
-
-    <div class="section-title">
-
-        <div>
-
-            <h2>
-                Farm DNA Evolution
-            </h2>
-
-            <small style="
-                color:#6B776F;
-                font-size:10px;
-            ">
-                Your farm is learning over time
-            </small>
-
-        </div>
-
-        <button>
-            2023 — 2026
-        </button>
-
-    </div>
-
-
-    <div class="chart">
-
-        <div class="bar"
-             title="2023 — DNA 71">
-        </div>
-
-        <div class="bar"
-             title="2024 — DNA 76">
-        </div>
-
-        <div class="bar"
-             title="2025 — DNA 82">
-        </div>
-
-        <div class="bar"
-             title="2026 — DNA 87">
-        </div>
-
-    </div>
-
-
-    <div class="chart-labels">
-
-        <span>2023</span>
-        <span>2024</span>
-        <span>2025</span>
-        <span>2026</span>
-
-    </div>
-
-</div>
-
-</section>
-
-
-</main>
-
-</div>
-
-
-<!-- =========================
-     MOBILE NAV
-========================= -->
-
-<nav class="mobile-nav">
-
-    <button class="active"
-            onclick="home()">
-        ⌂
-    </button>
-
-    <button onclick="dna()">
-        🧬
-    </button>
-
-    <button onclick="crops()">
-        🌱
-    </button>
-
-    <button onclick="ai()">
-        🤖
-    </button>
-
-    <button onclick="profile()">
-        👤
-    </button>
-
-</nav>
-
-
-<!-- =========================
-     JAVASCRIPT
-========================= -->
-
-<script>
-
-function home() {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-
-function dna() {
-
-    alert(
-        "🧬 FARM DNA PASSPORT\n\n" +
-        "Overall DNA Score: 87/100\n\n" +
-        "🌱 Soil: 82\n" +
-        "💧 Water: 78\n" +
-        "🌾 Crop: 91\n" +
-        "🌦 Weather: 86\n" +
-        "🐛 Pest: 92\n" +
-        "📈 Yield: 84"
-    );
-
-}
-
-
-function crops() {
-
-    alert(
-        "🌱 CROP INTELLIGENCE\n\n" +
-        "Current Crop: Rice\n" +
-        "Growth Stage: Flowering\n" +
-        "Day: 72\n\n" +
-        "Crop Health: 91%\n" +
-        "Expected Yield: 4.8 t/acre"
-    );
-
-}
-
-
-function water() {
-
-    alert(
-        "💧 WATER INTELLIGENCE\n\n" +
-        "Water Efficiency: 78%\n" +
-        "Today's Usage: 1,840 L\n\n" +
-        "Recommendation:\n" +
-        "Irrigate tomorrow morning."
-    );
-
-}
-
-
-function weather() {
-
-    alert(
-        "☀️ WEATHER INTELLIGENCE\n\n" +
-        "Temperature: 29°C\n" +
-        "Humidity: 68%\n" +
-        "Rain Probability: 20%\n" +
-        "Wind: 12 km/h\n\n" +
-        "Farming conditions are good."
-    );
-
-}
-
-
-function pest() {
-
-    alert(
-        "🐛 PEST INTELLIGENCE\n\n" +
-        "Current Risk: LOW\n" +
-        "Probability: 18%\n\n" +
-        "Farm DNA indicates no immediate\n" +
-        "high-risk pest conditions."
-    );
-
-}
-
-
-function ai() {
-
-    alert(
-        "🤖 FARM DNA AI\n\n" +
-        "Your soil moisture is falling 14%\n" +
-        "faster than your normal pattern.\n\n" +
-        "Recommendation:\n" +
-        "Irrigate tomorrow morning.\n\n" +
-        "Potential water saving: 8–12%"
-    );
-
-}
-
-
-function profile() {
-
-    alert(
-        "👤 FARM PROFILE\n\n" +
-        "Green Valley Farm\n" +
-        "Vijayawada\n" +
-        "12 Acres\n" +
-        "Main Crop: Rice\n" +
-        "Soil: Clay Loam"
-    );
-
-}
-
-
-function takeAction() {
-
-    alert(
-        "✅ Recommendation saved!\n\n" +
-        "Irrigation reminder:\n" +
-        "Tomorrow morning\n\n" +
-        "Expected water saving: 8–12%"
-    );
-
-}
-
-
-function showNotification() {
-
-    alert(
-        "🔔 FARM DNA ALERT\n\n" +
-        "Your soil moisture is dropping\n" +
-        "faster than usual.\n\n" +
-        "Recommended action:\n" +
-        "Irrigate tomorrow morning."
-    );
-
-}
-
-</script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
