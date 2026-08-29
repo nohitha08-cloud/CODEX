@@ -1,6 +1,5 @@
 /* =========================================
-   FARM DNA - MAIN JAVASCRIPT
-   Navigation & Dashboard Interactions
+   FARM DNA - COMPLETE JAVASCRIPT
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,10 +14,44 @@ document.addEventListener("DOMContentLoaded", () => {
         crops: "crops.html",
         water: "water.html",
         weather: "weather.html",
-        pest: "pest.html",
-        soil: "soil.html",
-        ai: "ai.html"
+        pest: "pest.html"
     };
+
+
+    /* =========================================
+       TOAST FUNCTION
+    ========================================= */
+
+    function showToast(title, message) {
+
+        const toast = document.getElementById("toast");
+
+        if (!toast) return;
+
+        const titleElement = toast.querySelector("strong");
+        const messageElement = toast.querySelector("span");
+
+        if (titleElement) {
+            titleElement.textContent = title;
+        }
+
+        if (messageElement) {
+            messageElement.textContent = message;
+        }
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+
+
+    /* =========================================
+       MAKE TOAST AVAILABLE TO HTML
+    ========================================= */
+
+    window.showToast = showToast;
 
 
     /* =========================================
@@ -33,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const section = item.dataset.section;
 
-            if (pages[section]) {
+            if (section && pages[section]) {
                 window.location.href = pages[section];
             }
 
@@ -54,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const action = card.dataset.action;
 
-            if (pages[action]) {
+            if (action && pages[action]) {
                 window.location.href = pages[action];
             }
 
@@ -84,8 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
        DNA DETAILS BUTTON
     ========================================= */
 
-    const detailsBtn =
-        document.getElementById("detailsBtn");
+    const detailsBtn = document.getElementById("detailsBtn");
 
     if (detailsBtn) {
 
@@ -99,19 +131,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       WEATHER CARD
+       FARM DNA SYNC BUTTON
     ========================================= */
 
-    const weatherCard =
-        document.querySelector(".weather-card");
+    const syncFarmBtn =
+        document.getElementById("syncFarmBtn");
 
-    if (weatherCard) {
+    if (syncFarmBtn) {
 
-        weatherCard.style.cursor = "pointer";
+        syncFarmBtn.addEventListener("click", () => {
 
-        weatherCard.addEventListener("click", () => {
-
-            window.location.href = "weather.html";
+            showToast(
+                "Farm DNA",
+                "Farm profile synchronized successfully."
+            );
 
         });
 
@@ -119,47 +152,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       FARM INTELLIGENCE CARDS
+       CROP UPDATE BUTTON
     ========================================= */
 
-    const metricCards =
-        document.querySelectorAll(".metric-card");
+    const updateCropBtn =
+        document.getElementById("updateCropBtn");
 
-    metricCards.forEach(card => {
+    if (updateCropBtn) {
 
-        card.style.cursor = "pointer";
+        updateCropBtn.addEventListener("click", () => {
 
-        const title =
-            card.querySelector("h3");
-
-        if (!title) return;
-
-        const text =
-            title.textContent.toLowerCase();
-
-        card.addEventListener("click", () => {
-
-            if (text.includes("soil")) {
-
-                window.location.href = "soil.html";
-
-            }
-
-            else if (text.includes("crop")) {
-
-                window.location.href = "crops.html";
-
-            }
-
-            else if (text.includes("water")) {
-
-                window.location.href = "water.html";
-
-            }
+            showToast(
+                "Crop Intelligence",
+                "Crop data updated successfully."
+            );
 
         });
 
-    });
+    }
+
+
+    /* =========================================
+       CROP AI RECOMMENDATION
+    ========================================= */
+
+    const saveRecommendationBtn =
+        document.getElementById("saveRecommendationBtn");
+
+    if (saveRecommendationBtn) {
+
+        saveRecommendationBtn.addEventListener("click", () => {
+
+            showToast(
+                "Crop AI",
+                "Recommendation saved to farm plan."
+            );
+
+        });
+
+    }
 
 
     /* =========================================
@@ -205,28 +236,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       MOBILE NAVIGATION
+       WEATHER CARD
     ========================================= */
 
-    const mobileButtons =
-        document.querySelectorAll(".mobile-nav button");
+    const weatherCard =
+        document.querySelector(".weather-card");
 
-    mobileButtons.forEach((button, index) => {
+    if (weatherCard) {
 
-        button.addEventListener("click", () => {
+        weatherCard.style.cursor = "pointer";
 
-            const mobilePages = [
-                "index.html",
-                "dnapage.html",
-                "crops.html",
-                "ai.html",
-                "index.html"
-            ];
+        weatherCard.addEventListener("click", () => {
 
-            if (mobilePages[index]) {
+            window.location.href = "weather.html";
 
-                window.location.href =
-                    mobilePages[index];
+        });
+
+    }
+
+
+    /* =========================================
+       FARM INTELLIGENCE CARDS
+    ========================================= */
+
+    const metricCards =
+        document.querySelectorAll(".metric-card");
+
+    metricCards.forEach(card => {
+
+        card.style.cursor = "pointer";
+
+        card.addEventListener("click", () => {
+
+            const title =
+                card.querySelector("h3");
+
+            if (!title) return;
+
+            const text =
+                title.textContent.toLowerCase();
+
+            if (text.includes("soil")) {
+
+                showToast(
+                    "Soil Intelligence",
+                    "Soil health score: 82/100."
+                );
+
+            }
+
+            else if (text.includes("crop")) {
+
+                window.location.href = "crops.html";
+
+            }
+
+            else if (text.includes("water")) {
+
+                window.location.href = "water.html";
 
             }
 
@@ -236,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       ACTIVE SIDEBAR
+       ACTIVE SIDEBAR ITEM
     ========================================= */
 
     const currentPage =
@@ -247,10 +314,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navItems.forEach(item => {
 
-        const section =
-            item.dataset.section;
+        const section = item.dataset.section;
 
         if (
+            section &&
             pages[section] &&
             pages[section].toLowerCase() === currentPage
         ) {
@@ -267,75 +334,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       TOAST
+       MOBILE NAVIGATION
     ========================================= */
 
-    function showToast(title, message) {
+    const mobileButtons =
+        document.querySelectorAll(".mobile-nav button");
 
-        const toast =
-            document.getElementById("toast");
+    const mobilePages = [
+        "index.html",
+        "dnapage.html",
+        "crops.html",
+        "index.html",
+        "index.html"
+    ];
 
-        if (!toast) return;
+    mobileButtons.forEach((button, index) => {
 
-        const titleElement =
-            toast.querySelector("strong");
+        button.addEventListener("click", () => {
 
-        const messageElement =
-            toast.querySelector("span");
+            if (mobilePages[index]) {
 
-        if (titleElement) {
-            titleElement.textContent = title;
-        }
+                window.location.href =
+                    mobilePages[index];
 
-        if (messageElement) {
-            messageElement.textContent = message;
-        }
+            }
 
-        toast.classList.add("show");
-
-        setTimeout(() => {
-
-            toast.classList.remove("show");
-
-        }, 3000);
-
-    }
-   
-   /* =========================================
-   CROP PAGE BUTTONS
-========================================= */
-
-const updateCropBtn =
-    document.getElementById("updateCropBtn");
-
-if (updateCropBtn) {
-
-    updateCropBtn.addEventListener("click", () => {
-
-        showToast(
-            "Crop Intelligence",
-            "Crop data updated successfully."
-        );
+        });
 
     });
 
-}
-
-
-const saveRecommendationBtn =
-    document.getElementById("saveRecommendationBtn");
-
-if (saveRecommendationBtn) {
-
-    saveRecommendationBtn.addEventListener("click", () => {
-
-        showToast(
-            "Crop AI",
-            "Recommendation saved to farm plan."
-        );
-
-    });
-
-}
 
 });
