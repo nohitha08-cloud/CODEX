@@ -1,149 +1,103 @@
-/* =========================================
-   FARM DNA - COMPLETE JAVASCRIPT
-========================================= */
+/* ==================================
+   FARM DNA JAVASCRIPT
+================================== */
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =========================================
-       PAGE ROUTES
-    ========================================= */
+    const navItems =
+        document.querySelectorAll(".nav-item");
 
-    const pages = {
-        dashboard: "index.html",
-        dna: "dnapage.html",
-        crops: "crops.html",
-        water: "water.html",
-        weather: "weather.html",
-        pest: "pest.html"
-    };
+    const quickCards =
+        document.querySelectorAll(".quick-card");
+
+    const toast =
+        document.getElementById("toast");
 
 
-    /* =========================================
-       TOAST FUNCTION
-    ========================================= */
-
-    function showToast(title, message) {
-
-        const toast = document.getElementById("toast");
-
-        if (!toast) return;
-
-        const titleElement = toast.querySelector("strong");
-        const messageElement = toast.querySelector("span");
-
-        if (titleElement) {
-            titleElement.textContent = title;
-        }
-
-        if (messageElement) {
-            messageElement.textContent = message;
-        }
-
-        toast.classList.add("show");
-
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 3000);
-    }
-
-
-    /* =========================================
-       MAKE TOAST AVAILABLE TO HTML
-    ========================================= */
-
-    window.showToast = showToast;
-
-
-    /* =========================================
+    /* =========================
        SIDEBAR NAVIGATION
-    ========================================= */
-
-    const navItems = document.querySelectorAll(".nav-item");
+    ========================= */
 
     navItems.forEach(item => {
 
         item.addEventListener("click", () => {
 
-            const section = item.dataset.section;
+            navItems.forEach(nav => {
+                nav.classList.remove("active");
+            });
 
-            if (section && pages[section]) {
-                window.location.href = pages[section];
-            }
+            item.classList.add("active");
+
+            const section =
+                item.dataset.section;
+
+            showToast(
+                "FarmDNA",
+                sectionMessage(section)
+            );
 
         });
 
     });
 
 
-    /* =========================================
-       QUICK ACTION CARDS
-    ========================================= */
-
-    const quickCards = document.querySelectorAll(".quick-card");
+    /* =========================
+       QUICK ACTIONS
+    ========================= */
 
     quickCards.forEach(card => {
 
         card.addEventListener("click", () => {
 
-            const action = card.dataset.action;
+            const action =
+                card.dataset.action;
 
-            if (action && pages[action]) {
-                window.location.href = pages[action];
-            }
+            showToast(
+                "FarmDNA",
+                actionMessage(action)
+            );
 
         });
 
     });
 
 
-    /* =========================================
-       FARM DNA BUTTON
-    ========================================= */
+    /* =========================
+       DNA BUTTON
+    ========================= */
 
-    const dnaBtn = document.getElementById("dnaBtn");
+    const dnaBtn =
+        document.getElementById("dnaBtn");
 
     if (dnaBtn) {
 
         dnaBtn.addEventListener("click", () => {
 
-            window.location.href = "dnapage.html";
+            showToast(
+                "Farm DNA",
+                "Your Farm DNA Passport is opening..."
+            );
 
         });
 
     }
 
 
-    /* =========================================
-       DNA DETAILS BUTTON
-    ========================================= */
+    /* =========================
+       DETAILS BUTTON
+    ========================= */
 
-    const detailsBtn = document.getElementById("detailsBtn");
+    const detailsBtn =
+        document.getElementById("detailsBtn");
 
     if (detailsBtn) {
 
         detailsBtn.addEventListener("click", () => {
 
-            window.location.href = "dnapage.html";
-
-        });
-
-    }
-
-
-    /* =========================================
-       FARM DNA SYNC BUTTON
-    ========================================= */
-
-    const syncFarmBtn =
-        document.getElementById("syncFarmBtn");
-
-    if (syncFarmBtn) {
-
-        syncFarmBtn.addEventListener("click", () => {
-
             showToast(
-                "Farm DNA",
-                "Farm profile synchronized successfully."
+                "DNA Passport",
+                "Farm DNA details loaded successfully."
             );
 
         });
@@ -151,51 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =========================================
-       CROP UPDATE BUTTON
-    ========================================= */
-
-    const updateCropBtn =
-        document.getElementById("updateCropBtn");
-
-    if (updateCropBtn) {
-
-        updateCropBtn.addEventListener("click", () => {
-
-            showToast(
-                "Crop Intelligence",
-                "Crop data updated successfully."
-            );
-
-        });
-
-    }
-
-
-    /* =========================================
-       CROP AI RECOMMENDATION
-    ========================================= */
-
-    const saveRecommendationBtn =
-        document.getElementById("saveRecommendationBtn");
-
-    if (saveRecommendationBtn) {
-
-        saveRecommendationBtn.addEventListener("click", () => {
-
-            showToast(
-                "Crop AI",
-                "Recommendation saved to farm plan."
-            );
-
-        });
-
-    }
-
-
-    /* =========================================
-       AI ACTION BUTTON
-    ========================================= */
+    /* =========================
+       AI ACTION
+    ========================= */
 
     const actionBtn =
         document.getElementById("actionBtn");
@@ -205,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         actionBtn.addEventListener("click", () => {
 
             showToast(
-                "FarmDNA AI",
+                "AI Recommendation",
                 "Irrigation reminder scheduled for tomorrow morning."
             );
 
@@ -214,154 +126,159 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =========================================
-       NOTIFICATION BUTTON
-    ========================================= */
+    /* =========================
+       NOTIFICATION
+    ========================= */
 
     const notificationBtn =
-        document.getElementById("notificationBtn");
+        document.getElementById(
+            "notificationBtn"
+        );
 
     if (notificationBtn) {
 
-        notificationBtn.addEventListener("click", () => {
-
-            showToast(
-                "Farm Alert",
-                "Soil moisture is 14% below your normal pattern."
-            );
-
-        });
-
-    }
-
-
-    /* =========================================
-       WEATHER CARD
-    ========================================= */
-
-    const weatherCard =
-        document.querySelector(".weather-card");
-
-    if (weatherCard) {
-
-        weatherCard.style.cursor = "pointer";
-
-        weatherCard.addEventListener("click", () => {
-
-            window.location.href = "weather.html";
-
-        });
-
-    }
-
-
-    /* =========================================
-       FARM INTELLIGENCE CARDS
-    ========================================= */
-
-    const metricCards =
-        document.querySelectorAll(".metric-card");
-
-    metricCards.forEach(card => {
-
-        card.style.cursor = "pointer";
-
-        card.addEventListener("click", () => {
-
-            const title =
-                card.querySelector("h3");
-
-            if (!title) return;
-
-            const text =
-                title.textContent.toLowerCase();
-
-            if (text.includes("soil")) {
+        notificationBtn.addEventListener(
+            "click",
+            () => {
 
                 showToast(
-                    "Soil Intelligence",
-                    "Soil health score: 82/100."
+                    "Farm Alert",
+                    "Soil moisture is 14% below your normal pattern."
                 );
 
             }
+        );
 
-            else if (text.includes("crop")) {
-
-                window.location.href = "crops.html";
-
-            }
-
-            else if (text.includes("water")) {
-
-                window.location.href = "water.html";
-
-            }
-
-        });
-
-    });
+    }
 
 
-    /* =========================================
-       ACTIVE SIDEBAR ITEM
-    ========================================= */
-
-    const currentPage =
-        window.location.pathname
-            .split("/")
-            .pop()
-            .toLowerCase();
-
-    navItems.forEach(item => {
-
-        const section = item.dataset.section;
-
-        if (
-            section &&
-            pages[section] &&
-            pages[section].toLowerCase() === currentPage
-        ) {
-
-            navItems.forEach(nav => {
-                nav.classList.remove("active");
-            });
-
-            item.classList.add("active");
-
-        }
-
-    });
-
-
-    /* =========================================
-       MOBILE NAVIGATION
-    ========================================= */
+    /* =========================
+       MOBILE NAV
+    ========================= */
 
     const mobileButtons =
-        document.querySelectorAll(".mobile-nav button");
+        document.querySelectorAll(
+            ".mobile-nav button"
+        );
 
-    const mobilePages = [
-        "index.html",
-        "dnapage.html",
-        "crops.html",
-        "index.html",
-        "index.html"
-    ];
+    mobileButtons.forEach(button => {
 
-    mobileButtons.forEach((button, index) => {
+        button.addEventListener(
+            "click",
+            () => {
 
-        button.addEventListener("click", () => {
+                mobileButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                });
 
-            if (mobilePages[index]) {
+                button.classList.add("active");
 
-                window.location.href =
-                    mobilePages[index];
+                showToast(
+                    "FarmDNA",
+                    "Navigation updated."
+                );
 
             }
-
-        });
+        );
 
     });
 
+
+    /* =========================
+       TOAST FUNCTION
+    ========================= */
+
+    function showToast(title, message) {
+
+        const titleElement =
+            toast.querySelector("strong");
+
+        const messageElement =
+            toast.querySelector("span");
+
+        titleElement.textContent = title;
+
+        messageElement.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 3000);
+
+    }
+
+
+    /* =========================
+       NAV MESSAGES
+    ========================= */
+
+    function sectionMessage(section) {
+
+        const messages = {
+
+            dashboard:
+                "Dashboard overview loaded.",
+
+            dna:
+                "Farm DNA Passport loaded.",
+
+            crops:
+                "Crop intelligence loaded.",
+
+            water:
+                "Water efficiency data loaded.",
+
+            weather:
+                "Weather intelligence loaded.",
+
+            pest:
+                "Pest intelligence loaded.",
+
+            ai:
+                "FarmDNA AI is ready."
+
+        };
+
+        return messages[section] ||
+               "Section loaded.";
+
+    }
+
+
+    /* =========================
+       ACTION MESSAGES
+    ========================= */
+
+    function actionMessage(action) {
+
+        const messages = {
+
+            crops:
+                "Crop health: 91% — Rice is flowering.",
+
+            water:
+                "Water efficiency is currently 78%.",
+
+            weather:
+                "Today's farming conditions are good.",
+
+            pest:
+                "Current pest risk is LOW.",
+
+            soil:
+                "Soil health score: 82/100.",
+
+            ai:
+                "AI found a new farming insight."
+
+        };
+
+        return messages[action] ||
+               "Action completed.";
+
+    }
 
 });
