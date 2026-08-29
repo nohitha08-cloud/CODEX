@@ -1,6 +1,6 @@
 /* =========================================
-   FARM DNA - HOME DASHBOARD JAVASCRIPT
-   Navigation + Buttons + Interactions
+   FARM DNA - MAIN JAVASCRIPT
+   Navigation & Dashboard Interactions
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ========================================= */
 
     const pages = {
-        dashboard: "home.html",
+        dashboard: "index.html",
         dna: "dnapage.html",
         crops: "crops.html",
         water: "water.html",
@@ -34,9 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const section = item.dataset.section;
 
             if (pages[section]) {
-
                 window.location.href = pages[section];
-
             }
 
         });
@@ -45,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       QUICK ACTIONS
+       QUICK ACTION CARDS
     ========================================= */
 
     const quickCards = document.querySelectorAll(".quick-card");
@@ -57,9 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const action = card.dataset.action;
 
             if (pages[action]) {
-
                 window.location.href = pages[action];
-
             }
 
         });
@@ -68,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       FARM DNA - HERO BUTTON
+       FARM DNA BUTTON
     ========================================= */
 
     const dnaBtn = document.getElementById("dnaBtn");
@@ -85,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       FARM DNA - VIEW DETAILS
+       DNA DETAILS BUTTON
     ========================================= */
 
     const detailsBtn =
@@ -96,48 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
         detailsBtn.addEventListener("click", () => {
 
             window.location.href = "dnapage.html";
-
-        });
-
-    }
-
-
-    /* =========================================
-       AI TAKE ACTION
-    ========================================= */
-
-    const actionBtn =
-        document.getElementById("actionBtn");
-
-    if (actionBtn) {
-
-        actionBtn.addEventListener("click", () => {
-
-            showToast(
-                "FarmDNA AI",
-                "Irrigation reminder scheduled for tomorrow morning."
-            );
-
-        });
-
-    }
-
-
-    /* =========================================
-       NOTIFICATION
-    ========================================= */
-
-    const notificationBtn =
-        document.getElementById("notificationBtn");
-
-    if (notificationBtn) {
-
-        notificationBtn.addEventListener("click", () => {
-
-            showToast(
-                "Farm Alert",
-                "Soil moisture is 14% below your normal pattern."
-            );
 
         });
 
@@ -171,28 +125,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const metricCards =
         document.querySelectorAll(".metric-card");
 
-    metricCards.forEach((card, index) => {
+    metricCards.forEach(card => {
 
         card.style.cursor = "pointer";
 
+        const title =
+            card.querySelector("h3");
+
+        if (!title) return;
+
+        const text =
+            title.textContent.toLowerCase();
+
         card.addEventListener("click", () => {
 
-            /*
-                Card 0 = Soil
-                Card 1 = Crops
-                Card 2 = Water
-            */
+            if (text.includes("soil")) {
 
-            const metricPages = [
-                "soil.html",
-                "crops.html",
-                "water.html"
-            ];
+                window.location.href = "soil.html";
 
-            if (metricPages[index]) {
+            }
 
-                window.location.href =
-                    metricPages[index];
+            else if (text.includes("crop")) {
+
+                window.location.href = "crops.html";
+
+            }
+
+            else if (text.includes("water")) {
+
+                window.location.href = "water.html";
 
             }
 
@@ -202,24 +163,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       FARM INTELLIGENCE "VIEW ALL"
+       AI ACTION BUTTON
     ========================================= */
 
-    const sectionButtons =
-        document.querySelectorAll(".section-header .text-btn");
+    const actionBtn =
+        document.getElementById("actionBtn");
 
-    sectionButtons.forEach(button => {
+    if (actionBtn) {
 
-        button.addEventListener("click", () => {
+        actionBtn.addEventListener("click", () => {
 
             showToast(
-                "Farm Intelligence",
-                "All farm intelligence modules are available."
+                "FarmDNA AI",
+                "Irrigation reminder scheduled for tomorrow morning."
             );
 
         });
 
-    });
+    }
+
+
+    /* =========================================
+       NOTIFICATION BUTTON
+    ========================================= */
+
+    const notificationBtn =
+        document.getElementById("notificationBtn");
+
+    if (notificationBtn) {
+
+        notificationBtn.addEventListener("click", () => {
+
+            showToast(
+                "Farm Alert",
+                "Soil moisture is 14% below your normal pattern."
+            );
+
+        });
+
+    }
 
 
     /* =========================================
@@ -233,21 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         button.addEventListener("click", () => {
 
-            /*
-                Mobile navigation:
-                0 = Dashboard
-                1 = Farm DNA
-                2 = Crops
-                3 = AI
-                4 = Profile / Dashboard
-            */
-
             const mobilePages = [
-                "home.html",
+                "index.html",
                 "dnapage.html",
                 "crops.html",
                 "ai.html",
-                "home.html"
+                "index.html"
             ];
 
             if (mobilePages[index]) {
@@ -263,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       ACTIVE SIDEBAR ITEM
+       ACTIVE SIDEBAR
     ========================================= */
 
     const currentPage =
@@ -294,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================
-       TOAST FUNCTION
+       TOAST
     ========================================= */
 
     function showToast(title, message) {
@@ -311,15 +284,11 @@ document.addEventListener("DOMContentLoaded", () => {
             toast.querySelector("span");
 
         if (titleElement) {
-
             titleElement.textContent = title;
-
         }
 
         if (messageElement) {
-
             messageElement.textContent = message;
-
         }
 
         toast.classList.add("show");
@@ -331,47 +300,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
 
     }
-
-
-    /* =========================================
-       KEYBOARD SHORTCUTS
-    ========================================= */
-
-    document.addEventListener("keydown", event => {
-
-        /*
-            D = Dashboard
-            F = Farm DNA
-            C = Crops
-            W = Water
-            T = Weather
-            P = Pest
-            S = Soil
-            A = AI
-        */
-
-        const key = event.key.toLowerCase();
-
-        const shortcuts = {
-
-            d: "home.html",
-            f: "dnapage.html",
-            c: "crops.html",
-            w: "water.html",
-            t: "weather.html",
-            p: "pest.html",
-            s: "soil.html",
-            a: "ai.html"
-
-        };
-
-        if (shortcuts[key]) {
-
-            window.location.href =
-                shortcuts[key];
-
-        }
-
-    });
 
 });
